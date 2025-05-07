@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/7e3ab07c-d449-4da6-a0bf-cdfdbc80b6c3)![image](https://github.com/user-attachments/assets/bbb88a86-03bf-49c1-8ff1-522f2ba289b1)# CubeJumpre
+# CubeJumpre
 Вдохновлённая Doodle Jump игра, где игрок управляет прыгающим кубиком, взбираясь вверх по случайно генерируемым платформам.
 
 ![Screenshot1](https://sun9-80.userapi.com/impg/KjRf8E5-qHWoV_g-xx3sVAMPJXIPPUGyI7c6vQ/-SG4OS1ityQ.jpg?size=1025x575&quality=95&sign=4139dee3d5344ac22683882e32ee6148&type=album)
