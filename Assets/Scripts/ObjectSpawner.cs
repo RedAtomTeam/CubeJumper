@@ -41,10 +41,15 @@ public class ObjectSpawner : MonoBehaviour
         }
     }
 
+
     private void SpawnObject()
     {
         var targetPoolIndex = UnityEngine.Random.Range(0, _spawnedObjectsPools.Count);
         var objectSize = _spawnedObjectsPools[targetPoolIndex].SpawnedObjectSize;
+        var objectBound = _spawnedObjectsPools[targetPoolIndex].GetBounds();
+
+        objectSize.x = objectBound.size.x;
+        objectSize.y = objectBound.size.y;
 
         Vector3 spawnPosition = new (
             transform.position.x + UnityEngine.Random.Range(

@@ -42,7 +42,7 @@ public class SpawnedObject : MonoBehaviour
         gameObject.SetActive(false);
         _rb.drag = _defaultDrag;
         if (_pool == null)
-            Destroy(_pool);
+            Destroy(gameObject);
         else
             _pool.Return(this);
     }
