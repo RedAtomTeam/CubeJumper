@@ -1,0 +1,19 @@
+{
+    "idSave": 1,
+    "isFirstSession": true,
+    "language": "ru",
+    "promptDone": false,
+    "money": 1,
+    "newPlayerName": "Hello!",
+    "openLevels": [
+        false,
+        true,
+        false
+    ],
+    "progress": {
+        "currentSpeedLevel": -1,
+        "currentJumpLevel": 2,
+        "currentSlideLevel": -1
+    },
+    "balance": 19
+}

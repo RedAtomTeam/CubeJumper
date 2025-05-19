@@ -1,12 +1,11 @@
 using System;
-using System.IO;
 using UnityEngine;
 
 public class UpgradeSystem : MonoBehaviour
 {
     [SerializeField] private PlayerMovementSystemConfig _playerConfig;
     [SerializeField] private UpgradesConfig _upgradesConfig;
-    private readonly PlayerProgressConfig _progress = new PlayerProgressConfig();
+    private PlayerProgressConfig _progress = new PlayerProgressConfig();
 
     public static UpgradeSystem Instance { get; private set; }
 
@@ -69,6 +68,13 @@ public class UpgradeSystem : MonoBehaviour
         }
     }
 
+    public PlayerProgressConfig Progress
+    {
+        get
+        {
+            return _progress;
+        }
+    }
 
     public event Action OnUpgradesChanged;
 
@@ -79,50 +85,19 @@ public class UpgradeSystem : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            LoadProgress();
         }
         else
         {
             Destroy(gameObject);
         }
+        SaveService.OnLoadProgress += LoadProgress;
     }
 
-    private void LoadProgress()
+    private void LoadProgress(PlayerProgressConfig progress)
     {
-        string loadPath = Path.Combine(Application.persistentDataPath, "Progress");
-
-        if (!File.Exists(loadPath))
-        {
-            SaveProgress();
-            return;
-        }
-
-        try
-        {
-            string json = File.ReadAllText(loadPath);
-            JsonUtility.FromJsonOverwrite(json, _progress);
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError($"Ошибка загрузки: {e.Message}");
-        }
+        _progress = progress;
     }
 
-    private void SaveProgress()
-    {
-        string savePath = Path.Combine(Application.persistentDataPath, "Progress");
-        string json = JsonUtility.ToJson(_progress);
-
-        try
-        {
-            File.WriteAllText(savePath, json);
-            Debug.Log($"Успешно сохранено значение {json} в файл: {savePath}");
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError($"Ошибка сохранения: {e.Message}");
-        }
-    }
 
     public bool TryUpgradeSpeed()
     {
@@ -157,7 +132,6 @@ public class UpgradeSystem : MonoBehaviour
 
         currentLevel++;
         OnUpgradesChanged?.Invoke();
-        SaveProgress();
         return true;
     }
 }

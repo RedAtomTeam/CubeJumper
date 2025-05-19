@@ -24,25 +24,33 @@ public class ParticlesHandler : MonoBehaviour
         _playerMovementSystem.jumpEvent += JumpHandle;
     }
 
-    private void MovingHandle(bool isMovingRight, bool isMovingLeft)
+    private void MovingHandle(bool isGround, bool isMovingRight, bool isMovingLeft)
     {
-        if (isMovingRight)
+        if (isGround)
         {
-            if (!_wallMoveParticlesRight.isPlaying)
-                _wallMoveParticlesRight.Play();
-            _wallMoveParticlesLeft.Stop();
-        }
-        else
-            _wallMoveParticlesRight.Stop();
+            if (isMovingRight)
+            {
+                if (!_wallMoveParticlesRight.isPlaying)
+                    _wallMoveParticlesRight.Play();
+                _wallMoveParticlesLeft.Stop();
+            }
+            else
+                _wallMoveParticlesRight.Stop();
 
-        if (isMovingLeft)
-        {
-            if (!_wallMoveParticlesLeft.isPlaying)
-                _wallMoveParticlesLeft.Play();
-            _wallMoveParticlesRight.Stop();
+            if (isMovingLeft)
+            {
+                if (!_wallMoveParticlesLeft.isPlaying)
+                    _wallMoveParticlesLeft.Play();
+                _wallMoveParticlesRight.Stop();
+            }
+            else
+                _wallMoveParticlesLeft.Stop();
         }
         else
+        {
+            _wallMoveParticlesRight.Stop();
             _wallMoveParticlesLeft.Stop();
+        }
     }
 
     private void SlidingHandle(bool isWallLeftSliding, bool isWallRightSliding)

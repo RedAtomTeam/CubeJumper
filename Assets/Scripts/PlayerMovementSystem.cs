@@ -35,9 +35,11 @@ public class PlayerMovementSystem : MonoBehaviour
     public float verticalInput;
     public float horisontalInput;
 
-    public event Action<bool, bool> movingEvent;
+    public event Action<bool, bool, bool> movingEvent;
     public event Action<bool, bool> slidingEvent;
     public event Action<bool, bool, bool> jumpEvent;
+    public event Action<bool, bool, bool> landingEvent;
+
 
 
     private void Awake()
@@ -102,7 +104,12 @@ public class PlayerMovementSystem : MonoBehaviour
             gameObject.transform.position.y - gameObject.transform.localScale.y / 2 - 0.1f
             );
 
-        _isGrounded = Physics2D.OverlapArea(groundPointA, groundPointB, _groundLayer);
+        if (_isGrounded != Physics2D.OverlapArea(groundPointA, groundPointB, _groundLayer))
+        {
+            _isGrounded = !_isGrounded;
+            //if (_isGrounded)
+                landingEvent?.Invoke(_isGrounded, false, false);
+        }
     }
 
     private void IsOnWall()
@@ -116,7 +123,12 @@ public class PlayerMovementSystem : MonoBehaviour
             gameObject.transform.position.y - gameObject.transform.localScale.y / 2 + 0.1f
             );
 
-        _isWallRight = Physics2D.OverlapArea(wallPointA, wallPointB, _wallLayer) && !_isGrounded;
+        bool isWallRightLanding = false;
+        if ( _isWallRight != (Physics2D.OverlapArea(wallPointA, wallPointB, _wallLayer) && !_isGrounded))
+        {
+            _isWallRight = Physics2D.OverlapArea(wallPointA, wallPointB, _wallLayer) && !_isGrounded;
+            isWallRightLanding = true;
+        }
 
         wallPointA = new Vector2(
             gameObject.transform.position.x - gameObject.transform.localScale.x / 2,
@@ -127,15 +139,30 @@ public class PlayerMovementSystem : MonoBehaviour
             gameObject.transform.position.y - gameObject.transform.localScale.y / 2 + 0.1f
             );
 
-        _isWallLeft = Physics2D.OverlapArea(wallPointA, wallPointB, _wallLayer) && !_isGrounded;
 
-        _isOnWall = (_isWallLeft || _isWallRight);
+        bool isWallLeftLanding = false;
+        if (_isWallLeft != (Physics2D.OverlapArea(wallPointA, wallPointB, _wallLayer) && !_isGrounded))
+        {
+            _isWallLeft = Physics2D.OverlapArea(wallPointA, wallPointB, _wallLayer) && !_isGrounded;
+            isWallLeftLanding = true;
+        }
+
+        if (_isOnWall != (_isWallLeft || _isWallRight))
+        {
+            _isOnWall = !_isOnWall;
+            //print($"{_isOnWall}, {_isOnWall && isWallLeftLanding}, {_isOnWall && isWallRightLanding}");
+            //if (_isOnWall) 
+                landingEvent?.Invoke(false, _isOnWall && isWallLeftLanding, _isOnWall && isWallRightLanding);
+        }
 
         if ( _isOnWall == true && _canVerticalMove == false) 
         { 
             _rb.velocity = Vector2.zero;
         }
         _canVerticalMove = _isOnWall;
+
+        //if (_isOnWall)
+            //print($"{_isOnWall}, {_isOnWall && isWallLeftLanding}, {_isOnWall && isWallLeftLanding}");
     }
 
 
@@ -159,7 +186,7 @@ public class PlayerMovementSystem : MonoBehaviour
             _rb.AddForce(movement * Vector2.right);
         }
         slidingEvent?.Invoke(_isWallSliding && _isWallLeft, _isWallSliding && _isWallRight);
-        movingEvent?.Invoke(_rb.velocity.x > 0.1f && _isGrounded, _rb.velocity.x < -0.1f && _isGrounded);
+        movingEvent?.Invoke(_isGrounded, _rb.velocity.x > 0.1f, _rb.velocity.x < -0.1f);
     }
 
     private void Jump()

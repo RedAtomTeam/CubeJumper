@@ -33,7 +33,7 @@ public class PlayerSoundEffectsHandler : MonoBehaviour
             _slideAudioSource.Play();
     }
 
-    private void MoveEffect(bool isMoveLeft, bool isMoveRight)
+    private void MoveEffect(bool isGround, bool isMoveLeft, bool isMoveRight)
     {
         if (!_moveAudioSource.isPlaying)
             _moveAudioSource.Play();
