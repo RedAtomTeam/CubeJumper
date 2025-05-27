@@ -28,9 +28,14 @@ public class AdsService : MonoBehaviour
         }
     }
 
-    public void ShowAd()
+    public bool ShowAd()
     {
-        YandexGame.FullscreenShow();
+        if (YandexGame.timerShowAd > 60)
+        {
+            YandexGame.FullscreenShow();
+            return true;
+        }
+        return false;
     }
 
     public void ShowRewardAd()

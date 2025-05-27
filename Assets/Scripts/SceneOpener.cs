@@ -22,8 +22,12 @@ public class SceneOpener : MonoBehaviour
             _upgradeSystem.Progress.currentSlideLevel > 0 ||
             _upgradeSystem.Progress.currentJumpLevel > 0)
         {
-            _adsService.ShowAd();
             YandexGame.CloseFullAdEvent += OpenScene;
+            if (!_adsService.ShowAd())
+            {
+                YandexGame.CloseFullAdEvent -= OpenScene;
+                OpenScene();
+            }
         }
         else
         {
@@ -33,6 +37,7 @@ public class SceneOpener : MonoBehaviour
 
     private void OpenScene()
     {
+        YandexGame.CloseFullAdEvent -= OpenScene;
         SceneManager.LoadSceneAsync(_sceneName);
     }
 }
