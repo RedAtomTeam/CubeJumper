@@ -10,7 +10,7 @@ public class SaveService : MonoBehaviour
     private static UpgradeSystem _upgradeSystem;
 
     public static event Action<int> OnLoadBalance;
-    public static event Action<PlayerProgressConfig> OnLoadProgress;
+    public static event Action<int, int, int> OnLoadProgress;
 
     public void Link(BalanceManager balanceManager, UpgradeSystem upgradeSystem)
     {
@@ -22,11 +22,12 @@ public class SaveService : MonoBehaviour
 
     private void Init()
     {
-        _balanceManager.OnCoinsUpdated += Save;
-        _upgradeSystem.OnUpgradesChanged += Save;
+        BalanceManager.OnCoinsUpdated += Save;
+        UpgradeSystem.OnUpgradesChanged += Save;
 
         Load();
     }
+
 
     private void Awake()
     {
@@ -48,20 +49,22 @@ public class SaveService : MonoBehaviour
 
     static void Save()
     {
-        SavesYG save = new SavesYG()
-        {
-            progress = _upgradeSystem.Progress,
-            balance = _balanceManager.Coins,
-        };
+        YandexGame.savesData.balance = _balanceManager.Coins;
 
-        YandexGame.savesData = save;
+        YandexGame.savesData.currentSpeedLevel = _upgradeSystem.Progress.currentSpeedLevel;
+        YandexGame.savesData.currentJumpLevel = _upgradeSystem.Progress.currentJumpLevel;
+        YandexGame.savesData.currentSlideLevel = _upgradeSystem.Progress.currentSlideLevel;
+
         YandexGame.SaveProgress();
     }
 
     static void Load()
     {
         OnLoadBalance?.Invoke(YandexGame.savesData.balance);
-        OnLoadProgress?.Invoke(YandexGame.savesData.progress);
+        OnLoadProgress?.Invoke(
+                                YandexGame.savesData.currentSpeedLevel,
+                                YandexGame.savesData.currentJumpLevel,
+                                YandexGame.savesData.currentSlideLevel
+            );
     }
-
 }

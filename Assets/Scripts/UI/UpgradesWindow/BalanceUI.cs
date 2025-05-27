@@ -8,7 +8,7 @@ public class BalanceUI : MonoBehaviour
 
     private void Start()
     {
-        BalanceManager.Instance.OnCoinsUpdated += UpdateBalance;   
+        BalanceManager.OnCoinsUpdated += UpdateBalance;   
         balanceText.text = BalanceManager.Instance.Coins.ToString();        
     }
 

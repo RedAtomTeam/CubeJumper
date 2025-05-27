@@ -1,5 +1,5 @@
 {
-    "idSave": 1,
+    "idSave": 181,
     "isFirstSession": true,
     "language": "ru",
     "promptDone": false,
@@ -10,10 +10,8 @@
         true,
         false
     ],
-    "progress": {
-        "currentSpeedLevel": -1,
-        "currentJumpLevel": 2,
-        "currentSlideLevel": -1
-    },
-    "balance": 19
+    "currentSpeedLevel": -1,
+    "currentJumpLevel": 1,
+    "currentSlideLevel": -1,
+    "balance": 132
 }

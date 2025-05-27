@@ -35,11 +35,17 @@ public class AdsService : MonoBehaviour
 
     public void ShowRewardAd()
     {
+        SoundtracksService.Instance.StopImmediatelySoundtracks();
+
+        YandexGame.CloseVideoEvent += OnAdFinished; 
         YandexGame.RewVideoShow(1);
     }
 
     public void ShowDoubleRewardAd(int coins)
     {
+        SoundtracksService.Instance.StopImmediatelySoundtracks();
+
+        YandexGame.CloseVideoEvent += OnAdFinished;
         YandexGame.RewVideoShow(2);
     }
 
@@ -56,5 +62,11 @@ public class AdsService : MonoBehaviour
         }
     }
 
+    private void OnAdFinished()
+    {
+        YandexGame.CloseVideoEvent -= OnAdFinished;
+        SoundtracksService.Instance.StartSoundtracks();
+
+    }
 
 }

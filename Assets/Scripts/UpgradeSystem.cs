@@ -76,7 +76,7 @@ public class UpgradeSystem : MonoBehaviour
         }
     }
 
-    public event Action OnUpgradesChanged;
+    public static event Action OnUpgradesChanged;
 
 
     private void Awake()
@@ -90,12 +90,13 @@ public class UpgradeSystem : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        SaveService.OnLoadProgress += LoadProgress;
     }
 
-    private void LoadProgress(PlayerProgressConfig progress)
+    public void LoadProgress(int speedLevel, int jumpLevel, int slideLevel)
     {
-        _progress = progress;
+        _progress.currentSpeedLevel = speedLevel;
+        _progress.currentJumpLevel = jumpLevel;
+        _progress.currentSlideLevel = slideLevel;
     }
 
 

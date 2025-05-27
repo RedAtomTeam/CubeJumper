@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+using YG;
 
-public class SoundtacksController : MonoBehaviour
+public class SoundtracksService : MonoBehaviour
 {
+    public static SoundtracksService Instance { get; private set; }
+
     [Header("Target Character Life System")]
     [SerializeField] private PlayerLifeChecker _playerLifeChecker;
 
@@ -15,23 +18,65 @@ public class SoundtacksController : MonoBehaviour
 
     private int targetClip = 0;
 
-    private void Start()
+    private void OnEnable()
     {
-        StartSoundtracks();
-        if (_playerLifeChecker is not null)
-            _playerLifeChecker.dieEvent += StopSoundtracks;
+        YandexGame.onHideWindowGame += OnTabLostFocus;
+        YandexGame.onShowWindowGame += OnTabRegainedFocus;
     }
 
-    private void StartSoundtracks()
+    private void OnDisable()
     {
-        _audioSource.clip = _soundtracks[targetClip];
-        _audioSource.Play();
+        YandexGame.onHideWindowGame -= OnTabLostFocus;
+        YandexGame.onShowWindowGame -= OnTabRegainedFocus;
+    }
+
+    private void OnTabLostFocus()
+    {
+        StopImmediatelySoundtracks();
+    }
+
+    private void OnTabRegainedFocus()
+    {
+        StartSoundtracks();
+    }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            StartSoundtracks();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+
+    public void StartSoundtracks()
+    {
         isSoundtracksPlaying = true;
     }
 
-    private void StopSoundtracks()
+    public void StopSoundtracks()
     {
         isSoundtracksPlaying = false;
+    }
+
+    public void StartImmediatelySoundtracks()
+    {
+        isSoundtracksPlaying = true;
+        _audioSource.UnPause();
+        _audioSource.volume = defaultVolume;
+    }
+
+    public void StopImmediatelySoundtracks()
+    {
+        isSoundtracksPlaying = false;
+        _audioSource.Pause();
+        _audioSource.volume = 0f;
     }
 
     void Update()
@@ -58,7 +103,7 @@ public class SoundtacksController : MonoBehaviour
             if (_audioSource.volume < 0f)
                 _audioSource.volume = 0f;
             if (_audioSource.volume == 0f)
-                _audioSource.Stop();
+                _audioSource.UnPause();
         }
     }
 }

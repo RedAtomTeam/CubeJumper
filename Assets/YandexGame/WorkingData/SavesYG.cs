@@ -18,8 +18,13 @@ namespace YG
 
         // Ваши сохранения
 
-        public PlayerProgressConfig progress;
-        public int balance;
+        //public PlayerProgressConfig progress;
+
+        public int currentSpeedLevel = -1;
+        public int currentJumpLevel = -1;
+        public int currentSlideLevel = -1;
+
+        public int balance = 0;
         // ...
 
         // Поля (сохранения) можно удалять и создавать новые. При обновлении игры сохранения ломаться не должны

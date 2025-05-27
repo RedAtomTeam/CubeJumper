@@ -15,6 +15,10 @@ public class Linker : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            SaveService.OnLoadProgress += _upgradeSystem.LoadProgress;
+            SaveService.OnLoadBalance += _balanceManager.LoadBalance;
+
             _saveService.Link(_balanceManager, _upgradeSystem);
             _adsService.Link(_balanceManager);
         }

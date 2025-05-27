@@ -9,7 +9,7 @@ public class BalanceManager : MonoBehaviour
     [SerializeField] private int _currentCoins;
 
 
-    public event System.Action<int> OnCoinsUpdated;
+    public static event System.Action<int> OnCoinsUpdated;
 
 
     private void Awake()
@@ -18,7 +18,6 @@ public class BalanceManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            SaveService.OnLoadBalance += LoadBalance;
         }
         else
         {
@@ -41,7 +40,7 @@ public class BalanceManager : MonoBehaviour
         return true;
     }
 
-    private void LoadBalance(int coins)
+   public void LoadBalance(int coins)
     {
         Coins = coins;
     }

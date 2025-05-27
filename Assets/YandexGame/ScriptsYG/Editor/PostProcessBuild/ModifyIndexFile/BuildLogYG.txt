@@ -1,0 +1,2 @@
+Build path: C:/Users/Я/Git/CubeJumper/Builds/27_05_2025
+Build number: 6
