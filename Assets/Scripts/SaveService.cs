@@ -47,11 +47,13 @@ public class SaveService : MonoBehaviour
     public static void SaveHeight(int height)
     {
         YandexGame.savesData.maxHeight = height;
+        YandexGame.NewLeaderboardScores("Height", height);
     }
 
     public static void SaveTime(int time)
     {
         YandexGame.savesData.maxTimeInSeconds = time;
+        YandexGame.NewLeaderboardScores("Time", time);
     }
 
 
