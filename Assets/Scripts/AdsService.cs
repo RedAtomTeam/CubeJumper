@@ -32,7 +32,9 @@ public class AdsService : MonoBehaviour
     {
         if (YandexGame.timerShowAd > 60)
         {
+            SoundtracksService.Instance.StopImmediatelySoundtracks();
             YandexGame.FullscreenShow();
+            YandexGame.CloseFullAdEvent += SoundtracksService.Instance.StartSoundtracks;
             return true;
         }
         return false;
@@ -42,7 +44,7 @@ public class AdsService : MonoBehaviour
     {
         SoundtracksService.Instance.StopImmediatelySoundtracks();
 
-        YandexGame.CloseVideoEvent += OnAdFinished; 
+        YandexGame.CloseVideoEvent += OnAdFinished;
         YandexGame.RewVideoShow(1);
     }
 

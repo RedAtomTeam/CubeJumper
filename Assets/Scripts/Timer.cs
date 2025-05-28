@@ -1,19 +1,23 @@
 using System;
 using TMPro;
 using UnityEngine;
+using YG;
 
 public class Timer : MonoBehaviour 
 {
-    private float _timeInSeconds = 0;
     private bool _isTimerEnable = false;
-    private TimeSpan _time;
 
-    [SerializeField] private PlayerLifeChecker playerLifeChecker; 
+    [SerializeField] private PlayerLifeChecker playerLifeChecker;
 
-    [SerializeField] private TextMeshProUGUI _textForTimer;
+    [SerializeField] private TextMeshProUGUI _maxTimeText;
+    [SerializeField] private TextMeshProUGUI _currentTimeText;
+
+    private float _maxTime;
+    private float _currentTime;
 
     private void Start()
     {
+        _maxTime = YandexGame.savesData.maxTimeInSeconds;
         playerLifeChecker.dieEvent += StopTimer;
         StartTimer();
     }
@@ -25,16 +29,37 @@ public class Timer : MonoBehaviour
 
     private void Update()
     {
+        TimeUpdate();
+        UpdateUI();
+    }
+
+    public void TimeUpdate()
+    {
         if (_isTimerEnable)
         {
-            _timeInSeconds += Time.deltaTime;
-            _time = TimeSpan.FromSeconds(_timeInSeconds);
-            _textForTimer.text = string.Format("{0:D2}:{1:D2}:{2:D2}",
-                _time.Hours,
-                _time.Minutes,
-                _time.Seconds); 
+            _currentTime += Time.deltaTime;
+            if (_currentTime > _maxTime)
+            {
+                _maxTime = _currentTime;
+                SaveService.SaveTime((int)_maxTime);
+            }
         }
     }
+
+    public void UpdateUI()
+    {
+        var time = TimeSpan.FromSeconds(_currentTime);
+        _currentTimeText.text = string.Format("{0:D2}:{1:D2}:{2:D2}",
+                time.Hours,
+                time.Minutes,
+                time.Seconds);
+        time = TimeSpan.FromSeconds(_maxTime);
+        _maxTimeText.text = string.Format("{0:D2}:{1:D2}:{2:D2}",
+                time.Hours,
+                time.Minutes,
+                time.Seconds); ;
+    }
+
 
     public void StopTimer()
     {

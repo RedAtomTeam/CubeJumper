@@ -38,6 +38,7 @@ public class SceneOpener : MonoBehaviour
     private void OpenScene()
     {
         YandexGame.CloseFullAdEvent -= OpenScene;
+        YandexGame.CloseFullAdEvent -= SoundtracksService.Instance.StartSoundtracks;
         SceneManager.LoadSceneAsync(_sceneName);
     }
 }

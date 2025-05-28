@@ -1,9 +1,10 @@
 using TMPro;
 using UnityEngine;
+using YG;
 
 public class HeightChecker : MonoBehaviour
 {
-    [SerializeField] private GameObject _player;
+    [SerializeField] private GameObject? _player;
     
     [SerializeField] private TextMeshProUGUI _maxHeightText;
     [SerializeField] private TextMeshProUGUI _currentHeightText;
@@ -13,7 +14,7 @@ public class HeightChecker : MonoBehaviour
 
     private void Start()
     {
-        _maxHeight = (int)_player?.transform.position.y;
+        _maxHeight = YandexGame.savesData.maxHeight;
         _currentHeight = (int)_player?.transform.position.y;
     }
 
@@ -25,18 +26,21 @@ public class HeightChecker : MonoBehaviour
 
     public void HeightUpdate()
     {
-        if (_player is not null)
+        if (_player != null)
         {
-            _currentHeight = (int)_player?.transform.position.y;
+            _currentHeight = _player.transform.position.y;
             if (_currentHeight > _maxHeight)
-                _maxHeight = (int)_currentHeight;
+            {
+                _maxHeight = _currentHeight;
+                SaveService.SaveHeight((int)_maxHeight);
+            }
         }
     }
 
     public void UpdateUI()
     {
-        _currentHeightText.text = _currentHeight.ToString();
-        _maxHeightText.text = _maxHeight.ToString();
+        _currentHeightText.text = ((int)_currentHeight).ToString();
+        _maxHeightText.text = ((int)_maxHeight).ToString();
     }
 
 

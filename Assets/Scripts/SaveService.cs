@@ -22,6 +22,8 @@ public class SaveService : MonoBehaviour
 
     private void Init()
     {
+
+
         BalanceManager.OnCoinsUpdated += Save;
         UpgradeSystem.OnUpgradesChanged += Save;
 
@@ -41,6 +43,17 @@ public class SaveService : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public static void SaveHeight(int height)
+    {
+        YandexGame.savesData.maxHeight = height;
+    }
+
+    public static void SaveTime(int time)
+    {
+        YandexGame.savesData.maxTimeInSeconds = time;
+    }
+
 
     static void Save(int coin)
     {
@@ -67,4 +80,11 @@ public class SaveService : MonoBehaviour
                                 YandexGame.savesData.currentSlideLevel
             );
     }
+}
+
+
+public partial class SavesYG
+{
+    // Ваши данные для сохранения
+    public int coins = 5; // Пример
 }

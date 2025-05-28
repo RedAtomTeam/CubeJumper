@@ -1,6 +1,6 @@
 {
-    "idSave": 205,
-    "isFirstSession": true,
+    "idSave": 29,
+    "isFirstSession": false,
     "language": "ru",
     "promptDone": false,
     "money": 1,
@@ -13,5 +13,7 @@
     "currentSpeedLevel": -1,
     "currentJumpLevel": 1,
     "currentSlideLevel": -1,
-    "balance": 156
+    "balance": 21,
+    "maxHeight": 99,
+    "maxTimeInSeconds": 98
 }

@@ -18,14 +18,16 @@ namespace YG
 
         // Ваши сохранения
 
-        //public PlayerProgressConfig progress;
+        // ...
 
         public int currentSpeedLevel = -1;
         public int currentJumpLevel = -1;
         public int currentSlideLevel = -1;
 
         public int balance = 0;
-        // ...
+
+        public int maxHeight = 0;
+        public int maxTimeInSeconds = 0;
 
         // Поля (сохранения) можно удалять и создавать новые. При обновлении игры сохранения ломаться не должны
 
@@ -33,7 +35,15 @@ namespace YG
         // Вы можете выполнить какие то действия при загрузке сохранений
         public SavesYG()
         {
-            // Допустим, задать значения по умолчанию для отдельных элементов массива
+            currentSpeedLevel = -1;
+             currentJumpLevel = -1;
+             currentSlideLevel = -1;
+
+             balance = 0;
+
+             maxHeight = 0;
+             maxTimeInSeconds = 0;
+        // Допустим, задать значения по умолчанию для отдельных элементов массива
 
             openLevels[1] = true;
         }
