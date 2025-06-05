@@ -16,10 +16,13 @@
 ![Screenshot3](https://sun9-69.userapi.com/impg/35FTvdbr9Wjk8l4K2QJ_7ao8mbwfZbxXGb75yA/BqnfjWEOeTk.jpg?size=1023x575&quality=95&sign=3dbc3aac54c4e86135a63bc5362c4718&type=album)
 
 ## 🛠 Технические аспекты разработки
-### Инструменты
-- Движок: Unity
-- Анимации: DOTween
-- Платформа: WebGL + Plugin YG
+### Платформа
+WebGL - игра размещена на веб-платформе Yandex Games и работает для десктопных устройств
+
+### Стек
+Движок: Unity
+
+Packages: DOTween, YG Plugin(1.6)
 
 ### Вся работа приложения организована через систему скриптов:
 - Спавн объектов:
@@ -38,6 +41,7 @@
 Также есть множество небольших классов для управления звуковыми эффектами, UI элементами и генерацией окружения(Например стен.)
 
 ![Screenshot4](https://sun9-58.userapi.com/impg/T9AUpm2zuELcDyVOuNPd2Q8bS6Pv277bQ5YBUw/M3ZiFg0NEYA.jpg?size=1025x573&quality=95&sign=4d0870402b7460eae1f91c9ba0e4e6c5&type=album)
+
 
 ## 💬 Контакты
 - Почта: redatomteam@gmail.com
